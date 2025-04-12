@@ -3,6 +3,7 @@ import { View, Text, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebaseConfig';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const Home = () => {
   const user = auth.currentUser;
@@ -24,31 +25,51 @@ const Home = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Home Screen!</Text>
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Welcome to Home Screen!</Text>
 
-      {user && (
-        <View style={styles.userInfo}>
-          <Text style={styles.userEmail}>Logged in as: {user.displayName}</Text>
-        </View>
-      )}
+        {user && (
+          <View style={styles.userInfo}>
+            <Text style={styles.userEmail}>Logged in as: {user.displayName}</Text>
+          </View>
+        )}
 
-      <CustomButton title="Logout" onPress={handleLogout} />
-      <CustomButton title="Go to Profile" onPress={() => router.push('/auth/Profile')} />
-      <CustomButton title="Video Call" onPress={() => router.push('/auth/WebViewScreen')} />
-      <CustomButton title="Chat" onPress={() => router.push('/chat/chat')} />
-      <CustomButton title="Book Appointment" onPress={() => router.push('/patient/book_patient')} />
+        <CustomButton title="Logout" onPress={handleLogout} />
+        <CustomButton title="Go to Profile" onPress={() => router.push('/auth/Profile')} />
+        <CustomButton title="Video Call" onPress={() => router.push('/auth/WebViewScreen')} />
+        <CustomButton title="Chat" onPress={() => router.push('/chat/chat')} />
+        <CustomButton title="Book Appointment" onPress={() => router.push('/patient/book_patient')} />
+        <CustomButton title="Therapy" onPress={() => router.push('/therapy/HomeScreen')} />
 
+      </View>
+
+      {/* Floating Chatbot Button */}
+      <TouchableOpacity style={styles.chatbotIcon} onPress={() => router.push('/chatbot/ChatScreen')}>
+        <Ionicons name="chatbubble-ellipses-outline" size={28} color="#fff" />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
+    backgroundColor: '#EDE7F6', // Light lavender background
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  container: {
     backgroundColor: '#F5F5F5', // Pale sand
     padding: 20,
-    justifyContent: 'center',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 5,
+    width: '90%',
     alignItems: 'center',
   },
   title: {
@@ -78,6 +99,19 @@ const styles = StyleSheet.create({
     color: '#4E342E',
     fontSize: 16,
     fontWeight: '600',
+  },
+  chatbotIcon: {
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    backgroundColor: '#4E342E',
+    padding: 16,
+    borderRadius: 50,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 2, height: 2 },
+    shadowRadius: 5,
   },
 });
 

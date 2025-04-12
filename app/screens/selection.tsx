@@ -1,37 +1,26 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { router } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-type RootStackParamList = {
-  RoleSelection: undefined;
-  PatientScreen: undefined;
-  DoctorScreen: undefined;
-};
-
-type RoleSelectionNavigationProp = StackNavigationProp<RootStackParamList, 'RoleSelection'>;
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const RoleSelection = () => {
-  const navigation = useNavigation<RoleSelectionNavigationProp>();
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Your Role</Text>
-      
-      <TouchableOpacity 
-        style={[styles.button, styles.patientButton]}
-        onPress={() => router.push('/screens/patientscreen')}
-      >
-        <Text style={styles.buttonText}>Patient</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity 
-        style={[styles.button, styles.doctorButton]}
-        onPress={() => router.push('/screens/doctorscreen')}
-      >
-        <Text style={styles.buttonText}>Doctor</Text>
-      </TouchableOpacity>
+
+      <View style={styles.roleContainer}>
+        {/* Patient Card */}
+        <TouchableOpacity style={styles.roleBox} onPress={() => router.push('/screens/patientscreen')}>
+          <FontAwesome5 name="user" size={40} color="#4285F4" />
+          <Text style={styles.roleText}>Patient</Text>
+        </TouchableOpacity>
+
+        {/* Doctor Card */}
+        <TouchableOpacity style={styles.roleBox} onPress={() => router.push('/screens/doctorscreen')}>
+          <FontAwesome5 name="user-md" size={40} color="#34A853" />
+          <Text style={styles.roleText}>Doctor</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -45,33 +34,34 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#2c3e50',
   },
-  button: {
-    padding: 15,
-    borderRadius: 8,
-    width: '80%',
+  roleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 30,
+  },
+  roleBox: {
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    padding: 30,
     alignItems: 'center',
-    marginBottom: 20,
-    elevation: 3,
+    elevation: 4,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+    width: 120,
   },
-  patientButton: {
-    backgroundColor: '#4285F4', // Blue
-  },
-  doctorButton: {
-    backgroundColor: '#34A853', // Green
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
+  roleText: {
+    marginTop: 10,
+    fontSize: 16,
     fontWeight: '600',
+    color: '#2c3e50',
+    textAlign: 'center',
   },
 });
 
